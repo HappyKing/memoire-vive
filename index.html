@@ -266,7 +266,7 @@ function openGame(i){
   const R=ROOMS.find(r=>r.id===g.r);
   const rows=[['Année de sortie',g.y],['Première fois',g.fy&&g.fy!==g.y?g.fy:''],['Machine',g.m],['Chez qui',g.w],['Studio',g.s?(g.s+(g.p?' ('+g.p+')':'')):''],['Genre',g.ge],['Statut',g.st],['Fini',g.f]].filter(r=>r[1]);
   $('#dlb').style.setProperty('--c',mc(g));
-  $('#dlb').innerHTML=`<h3 id="dt">${esc(g.t)}</h3><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}${g.mk?'<dt>Marquant</dt><dd>★ Oui</dd>':''}${g.tr?`<dt>Transmission</dt><dd>${esc(g.tr)}</dd>`:''}${isValise(g)?'<dt>Voyage</dt><dd>Console de valise, en mission</dd>':''}${g.pe.length?`<dt>Avec</dt><dd>${ptags(g)}</dd>`:''}${g.tg.length?`<dt>Parcours</dt><dd>${g.tg.map(t=>`<span class="ttag" role="link" tabindex="0" data-t="${esc(t)}">${esc(t)}</span>`).join('')}</dd>`:''}</dl>${txt(g)?`<p class="note">${esc(txt(g))}</p>`:''}${g.it?`<p class="itch">${esc(g.it)}</p>`:''}`;
+  $('#dlb').innerHTML=`<h3 id="dt">${esc(g.t)}</h3><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}${g.mk?'<dt>Marquant</dt><dd>★ Oui</dd>':''}${g.tr?`<dt>Partage</dt><dd>${esc(g.tr)}</dd>`:''}${isValise(g)?'<dt>Voyage</dt><dd>Console de valise, en mission</dd>':''}${g.pe.length?`<dt>Avec</dt><dd>${ptags(g)}</dd>`:''}${g.tg.length?`<dt>Parcours</dt><dd>${g.tg.map(t=>`<span class="ttag" role="link" tabindex="0" data-t="${esc(t)}">${esc(t)}</span>`).join('')}</dd>`:''}</dl>${txt(g)?`<p class="note">${esc(txt(g))}</p>`:''}${g.it?`<p class="itch">${esc(g.it)}</p>`:''}`;
   const d=$('#dlg');if(d.showModal)d.showModal();else d.setAttribute('open','');
 }
 
