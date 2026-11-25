@@ -90,7 +90,7 @@ h1{font-size:clamp(34px,5.4vw,52px);font-weight:800;text-wrap:balance}
 .twing h3 small{font:500 15px 'Source Serif 4',serif;color:var(--soft);margin-left:8px}
 .twing ul{list-style:none;margin:0;padding:0;columns:2 300px;column-gap:28px}
 .twing li{break-inside:avoid}
-.twing li button{all:unset;cursor:pointer;display:grid;grid-template-columns:4.6em minmax(0,1fr) auto;gap:8px;padding:4px 0;width:100%;font-size:15px;line-height:1.35}
+.twing li button{all:unset;cursor:pointer;display:grid;grid-template-columns:5.4em minmax(0,1fr) auto;gap:8px;padding:4px 0;width:100%;font-size:15px;line-height:1.35}
 .twing li button:hover .t{text-decoration:underline}
 .twing li button:focus-visible{outline:2px solid var(--rc)}
 .twing .y{color:var(--soft);font-variant-numeric:tabular-nums}
@@ -132,7 +132,7 @@ h1{font-size:clamp(34px,5.4vw,52px);font-weight:800;text-wrap:balance}
 .mach h4>span:last-child{font-weight:500;color:var(--soft);font-size:14px}
 .mach ul{list-style:none;margin:0;padding:0}
 .mnote{margin:0 0 10px;font-size:15px;font-style:italic;color:var(--soft);line-height:1.45}
-.mach li button{all:unset;cursor:pointer;display:grid;grid-template-columns:4.6em minmax(0,1fr) auto;gap:8px;padding:4px 0;width:100%;font-size:15px;line-height:1.35}
+.mach li button{all:unset;cursor:pointer;display:grid;grid-template-columns:5.4em minmax(0,1fr) auto;gap:8px;padding:4px 0;width:100%;font-size:15px;line-height:1.35}
 .mach li button:hover .t{text-decoration:underline}
 .mach li button:focus-visible{outline:2px solid var(--c)}
 .mach .y{color:var(--soft);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -240,7 +240,7 @@ function renderPlan(){
 
 function cartel(g,r){
   const tags=[];if(g.st==='À explorer')tags.push('À explorer');if(isValise(g))tags.push('Console de valise');if(/^Oui/.test(g.f))tags.push('Fini');if(g.tr&&g.tr!=='Joué ensemble')tags.push(g.tr);if(g.w&&g.w!=='Perso')tags.push(g.w);
-  return `<button class="cartel" data-i="${g.i}" style="--mc:${mc(g)}"><h4>${esc(g.t)}</h4><div class="meta">${esc(g.y)}${g.fy&&g.fy!==g.y?' · découvert en '+esc(g.fy):''} · <span class="sw" style="background:${mc(g)}"></span>${esc(g.m)}${g.s?' · '+esc(g.s):''}</div>${txt(g)?`<p>${esc(txt(g))}</p>`:''}${tags.length?`<div class="tags">${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${ptags(g)}</button>`;
+  return `<button class="cartel" data-i="${g.i}" style="--mc:${mc(g)}"><h4>${esc(g.t)}</h4><div class="meta">${g.y?esc(g.y)+(g.fy&&g.fy!==g.y?' · découvert en '+esc(g.fy):''):(g.fy?'découvert en '+esc(g.fy):'date inconnue')} · <span class="sw" style="background:${mc(g)}"></span>${esc(g.m)}${g.s?' · '+esc(g.s):''}</div>${txt(g)?`<p>${esc(txt(g))}</p>`:''}${tags.length?`<div class="tags">${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${ptags(g)}</button>`;
 }
 
 function renderRoom(){
@@ -322,7 +322,7 @@ function renderTourHall(t){
   ${mk.length?`<section class="band"><div class="wrap"><div class="sec"><h3>Pièces maîtresses du parcours</h3><span>${mk.length} jeux marquants</span></div><div class="cartels">${mk.map(g=>cartel(g)).join('')}</div></div></section>`:''}
   <section class="band" style="padding-top:${mk.length?0:'clamp(28px,4vw,56px)'}"><div class="wrap">
     <div class="sec"><h3>Le parcours, salle par salle</h3><span>${list.length} jeu${list.length>1?'x':''}</span></div>
-    ${ROOMS.filter(r=>byR[r.id]).map(r=>`<div class="twing" style="--rc:${r.c}"><h3>${esc(r.no)} · ${esc(r.nm)}<small>${esc(r.yrs)} · ${byR[r.id].length}</small></h3><ul>${byR[r.id].map(g=>`<li><button data-i="${g.i}"><span class="y">${esc(yr(g)||'–')}</span><span class="t">${g.mk?'<b>'+esc(g.t)+'</b>':esc(g.t)} <span class="m"><span class="sw" style="background:${mc(g)}"></span>${esc(g.m||'')}</span></span>${g.mk?'<span class="mk" style="--mc:'+r.c+'">★</span>':'<span></span>'}</button></li>`).join('')}</ul></div>`).join('')}
+    ${ROOMS.filter(r=>byR[r.id]).map(r=>`<div class="twing" style="--rc:${r.c}"><h3>${esc(r.no)} · ${esc(r.nm)}<small>${esc(r.yrs)} · ${byR[r.id].length}</small></h3><ul>${byR[r.id].map(g=>`<li><button data-i="${g.i}"><span class="y">${g.y?esc(g.y):(g.fy?'vers '+esc(g.fy):'–')}</span><span class="t">${g.mk?'<b>'+esc(g.t)+'</b>':esc(g.t)} <span class="m"><span class="sw" style="background:${mc(g)}"></span>${esc(g.m||'')}</span></span>${g.mk?'<span class="mk" style="--mc:'+r.c+'">★</span>':'<span></span>'}</button></li>`).join('')}</ul></div>`).join('')}
   </div></section>`;
   document.querySelectorAll('.room').forEach(b=>b.setAttribute('aria-current','false'));
 }
@@ -332,7 +332,7 @@ function renderList(){
   const byM={};list.forEach(g=>{const k=g.m||'Machine à préciser';(byM[k]=byM[k]||[]).push(g)});
   const ms=Object.entries(byM).sort((a,b)=>b[1].length-a[1].length);
   $('#cnt').textContent=list.length+' jeu'+(list.length>1?'x':'');
-  $('#mlist').innerHTML=ms.length?ms.map(([m,l])=>`<div class="mach" style="--mc:${PAL[state.room].col[m]||'#777'}"><h4><span class="mn"><span class="sw"></span>${esc(m)}${state.room==='nomades'&&VALISE.includes(m)?' <em class="val">console de valise</em>':''}</span><span>${l.length}</span></h4>${mnote(m,state.room)?`<p class="mnote">${esc(mnote(m,state.room))}</p>`:''}<ul>${l.sort((a,b)=>(a.y||'9').localeCompare(b.y||'9')||a.t.localeCompare(b.t)).map(g=>`<li><button data-i="${g.i}"><span class="y" title="${g.fy&&g.fy!==g.y?'Sorti en '+esc(g.y)+', découvert en '+esc(g.fy):''}">${esc(g.y||'–')}${g.fy&&g.fy!==g.y?'<small>→'+esc(g.fy.slice(2))+'</small>':''}</span><span class="t">${g.mk?'<b>'+esc(g.t)+'</b>':esc(g.t)}${g.st==='À explorer'?' <em class="val">à explorer</em>':''}</span>${g.mk?'<span class="mk" aria-label="marquant">★</span>':'<span></span>'}</button></li>`).join('')}</ul></div>`).join(''):'<p class="empty">Rien ne correspond à cette recherche dans cette salle.</p>';
+  $('#mlist').innerHTML=ms.length?ms.map(([m,l])=>`<div class="mach" style="--mc:${PAL[state.room].col[m]||'#777'}"><h4><span class="mn"><span class="sw"></span>${esc(m)}${state.room==='nomades'&&VALISE.includes(m)?' <em class="val">console de valise</em>':''}</span><span>${l.length}</span></h4>${mnote(m,state.room)?`<p class="mnote">${esc(mnote(m,state.room))}</p>`:''}<ul>${l.sort((a,b)=>(a.y||'9').localeCompare(b.y||'9')||a.t.localeCompare(b.t)).map(g=>`<li><button data-i="${g.i}"><span class="y" title="${g.y&&g.fy&&g.fy!==g.y?'Sorti en '+esc(g.y)+', découvert en '+esc(g.fy):(!g.y&&g.fy?'Découvert en '+esc(g.fy):'')}">${g.y?esc(g.y)+(g.fy&&g.fy!==g.y?'<small>→'+esc(g.fy.slice(2))+'</small>':''):(g.fy?'vers '+esc(g.fy):'–')}</span><span class="t">${g.mk?'<b>'+esc(g.t)+'</b>':esc(g.t)}${g.st==='À explorer'?' <em class="val">à explorer</em>':''}</span>${g.mk?'<span class="mk" aria-label="marquant">★</span>':'<span></span>'}</button></li>`).join('')}</ul></div>`).join(''):'<p class="empty">Rien ne correspond à cette recherche dans cette salle.</p>';
 }
 
 function openGame(i){

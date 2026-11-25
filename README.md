@@ -8,7 +8,7 @@ Cinq salles, cinq chapitres de ma vie de joueur, de l'enfance et des salles d'ar
 
 ## Contenu
 
-- `index.html` : le musée (une page statique, sans dépendance)
+- `index.html` : le musée (une page statique, sans framework)
 - `data.json` : la collection, un jeu par machine sur laquelle il a été joué
 - `tags.json` : les parcours thématiques et leur présentation
 - `machines.json` : les notes sur les machines
