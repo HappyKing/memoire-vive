@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Musée de HappyKing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  personal museum, warm but exact, like a real gallery guide
+   IDEA   the printed visitor plan of a small museum: one room per decade, wall labels (cartels) for the key pieces
+   PICTURE an architectural floor plan, rooms sized by number of games, each room in its own wall colour, clickable
+   COLOUR white walls, charcoal ink; room colours: crimson 80s, cobalt 90s, orange 2000s, teal 2010s, violet 2020s
+   TYPE   Archivo condensed for signage, Source Serif 4 for the cartels
+   LAYOUT title across the top, plan full width beneath; then the open room: colour band, cartels grid, full collection by machine */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#121214);--ink:light-dark(#141416,#ececee);--soft:light-dark(#5d5d66,#a4a4ad);--line:light-dark(#e3e3e7,#2b2b31);--card:light-dark(#f6f6f8,#1b1b1f);--wall:light-dark(#141416,#ececee)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Source Serif 4",Georgia,serif;overflow-x:clip}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+h1,h2,h3,.sign{font-family:Archivo,"Arial Narrow",sans-serif;font-stretch:80%;letter-spacing:-.02em;line-height:1.05;margin:0}
+h1{font-size:clamp(34px,5.4vw,52px);font-weight:800;text-wrap:balance}
+.lede{font-size:17px;max-width:62ch;color:var(--soft);margin:12px 0 0}
+.lede.alias{font-size:15px;font-style:italic}
+.ptour{margin:0 0 18px;padding:14px 16px;border-left:6px solid var(--c);background:var(--card)}
+.ptour b{font-family:Archivo,sans-serif;font-stretch:82%;font-size:18px}
+.ptour p{margin:4px 0 0;font-size:15px}
+.ptour .rooms{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.ptour .rooms a{font:600 13px/1 Archivo,sans-serif;font-stretch:85%;padding:6px 10px;border-radius:99px;border:1px solid var(--line);color:inherit;text-decoration:none}
+.ptour .rooms a[aria-current=true]{background:var(--ink);color:var(--bg)}
+.ttag{font:600 13px/1 Archivo,sans-serif;font-stretch:85%;padding:6px 10px;border-radius:99px;border:1.5px solid var(--ink);cursor:pointer;white-space:nowrap;display:inline-block;margin:0 6px 6px 0}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+.totals{display:flex;gap:28px;flex-wrap:wrap;font-family:Archivo,sans-serif;font-stretch:80%}
+.totals b{display:block;font-size:34px;line-height:1;font-weight:700}
+.totals span{font-size:14px;color:var(--soft)}
+.plan{margin-top:28px;display:flex;gap:0;border:6px solid var(--wall);min-height:230px}
+.room{position:relative;flex:1 1 0;border:0;border-right:6px solid var(--wall);background:var(--c);color:#fff;text-align:left;padding:16px;cursor:pointer;font:inherit;display:flex;flex-direction:column;justify-content:flex-start;gap:4px;transition:filter .15s}
+.room:last-child{border-right:0}
+.room::after{content:"";position:absolute;right:-6px;top:42%;width:6px;height:38px;background:var(--c)}
+.room:last-child::after{display:none}
+.room:hover{filter:brightness(1.08)}
+.room:focus-visible{outline:4px solid var(--ink);outline-offset:-10px}
+.room[aria-current=true]{box-shadow:inset 0 0 0 5px #fff}
+.room .no{font-family:Archivo,sans-serif;font-stretch:75%;font-size:15px;opacity:.85}
+.room .nm{font-family:Archivo,sans-serif;font-stretch:75%;font-weight:800;font-size:clamp(20px,2.1vw,28px);line-height:1;overflow-wrap:anywhere}
+.room .ct{font-size:14px;opacity:.9;margin-top:auto;padding-top:10px}
+.room .yr{font-family:Archivo,sans-serif;font-stretch:80%;font-weight:600;font-size:16px;margin-top:4px;white-space:nowrap}
+.room.res{--c:#3a3a40;flex:0 0 auto;min-width:110px}
+.people{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.plabel{font-family:Archivo,sans-serif;font-stretch:80%;font-weight:600;font-size:15px;margin-right:4px}
+.pchip{font:600 15px/1 Archivo,sans-serif;font-stretch:85%;padding:10px 14px;min-height:40px;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);border-radius:99px;cursor:pointer}
+.pchip span{font-weight:500;color:var(--soft);margin-left:4px}
+.pchip:hover,.pchip[aria-current=true]{background:var(--ink);color:var(--bg)}
+.pchip[aria-current=true] span,.pchip:hover span{color:var(--bg);opacity:.75}
+.ptags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ptag{font:600 13px/1 Archivo,sans-serif;font-stretch:85%;padding:6px 10px;border-radius:99px;background:var(--ink);color:var(--bg);cursor:pointer;white-space:nowrap}
+.ptag:hover,.ptag:focus-visible{outline:2px solid var(--mc,var(--c));outline-offset:1px}
+.phall{background:var(--ink);color:var(--bg)}
+.phall h2{font-size:clamp(32px,4.6vw,48px);font-weight:800}
+.phall .kick{font-family:Archivo,sans-serif;font-stretch:80%;font-size:17px;opacity:.8;margin-bottom:8px}
+.phall p{font-size:17px;margin:12px 0 0}
+.pwing{margin-bottom:36px}
+.pwing h3{font-size:24px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.pwing h3>span:last-child{font:500 15px 'Source Serif 4',serif;color:var(--soft);margin-left:8px}
+.hint{font-size:14px;color:var(--soft);margin:10px 0 0}
+.hall{background:var(--c);color:#fff}
+.hall .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
+.hall h2{font-size:clamp(32px,4.6vw,48px);font-weight:800}
+.hall .kick{font-family:Archivo,sans-serif;font-stretch:80%;font-size:17px;opacity:.85;margin-bottom:8px}
+.hall p{font-size:17px;max-width:60ch;margin:14px 0 0}
+.mstats{display:flex;gap:24px;flex-wrap:wrap;margin-top:20px;font-family:Archivo,sans-serif;font-stretch:80%}
+.mstats b{font-size:30px;display:block;line-height:1}
+.bars{display:grid;gap:7px}
+.bars h3{font-size:18px;margin-bottom:6px}
+.bar{display:grid;grid-template-columns:minmax(7em,11em) minmax(0,1fr) 2.6em;gap:10px;align-items:center;font-size:14px}
+.bar i{display:block;height:12px;box-shadow:0 0 0 1.5px rgba(255,255,255,.85)}
+.bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.sec{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.sec h3{font-size:28px;font-weight:700}
+.sec span{color:var(--soft);font-size:15px}
+.cartels{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.cartel{background:var(--card);border-left:8px solid var(--mc,var(--c));padding:16px 18px;cursor:pointer;text-align:left;font:inherit;color:inherit;border-top:0;border-right:0;border-bottom:0}
+.cartel:hover{background:color-mix(in srgb,var(--mc,var(--c)) 10%,var(--card))}
+.cartel:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.cartel h4{font:700 20px/1.1 Archivo,sans-serif;font-stretch:82%;margin:0}
+.cartel .meta{font-size:14px;color:var(--soft);margin:4px 0 8px}
+.cartel p{margin:0;font-size:15px;line-height:1.5}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tag{font:600 13px/1 Archivo,sans-serif;font-stretch:85%;padding:5px 8px;border:1px solid var(--line);border-radius:99px;white-space:nowrap}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.tools input,.tools select{font:16px "Source Serif 4",serif;padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:44px}
+.tools input{flex:1 1 240px}
+.tools label{display:flex;align-items:center;gap:8px;font-size:15px;min-height:44px;cursor:pointer}
+.tools input[type=checkbox]{flex:none;width:20px;height:20px;accent-color:var(--c)}
+.machines{columns:3 280px;column-gap:32px}
+.mach{break-inside:avoid;margin:0 0 22px}
+.mach h4{font:700 18px/1.1 Archivo,sans-serif;font-stretch:82%;margin:0 0 6px;padding-bottom:6px;border-bottom:3px solid var(--mc);display:flex;justify-content:space-between;gap:8px}
+.mach h4>span:last-child{font-weight:500;color:var(--soft);font-size:14px}
+.mach ul{list-style:none;margin:0;padding:0}
+.mnote{margin:0 0 10px;font-size:15px;font-style:italic;color:var(--soft);line-height:1.45}
+.mach li button{all:unset;cursor:pointer;display:grid;grid-template-columns:4.6em minmax(0,1fr) auto;gap:8px;padding:4px 0;width:100%;font-size:15px;line-height:1.35}
+.mach li button:hover .t{text-decoration:underline}
+.mach li button:focus-visible{outline:2px solid var(--c)}
+.mach .y{color:var(--soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mach .y small{font-size:12px;margin-left:2px}
+.mach .t b{font-weight:700}
+.mk{color:var(--mc);font-size:14px}
+.mach li button{border-left:3px solid transparent;padding-left:6px!important}
+.mach li button:hover{border-left-color:var(--mc)}
+.sw{display:inline-block;width:12px;height:12px;margin-right:7px;vertical-align:-1px;box-shadow:0 0 0 1.5px rgba(255,255,255,.85)}
+.mach .sw{background:var(--mc);box-shadow:none}
+.mn{display:inline}
+.val{font:italic 500 13px 'Source Serif 4',serif;color:var(--soft);margin-left:4px}
+.strip{display:flex;height:10px;gap:2px;margin-top:8px;width:100%}
+.strip i{display:block;min-width:3px;box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+.bar.more span{opacity:.85;font-style:italic}
+.empty{color:var(--soft);font-style:italic}
+dialog{border:0;padding:0;max-width:560px;width:calc(100% - 32px);background:var(--bg);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,10,14,.55)}
+.dl{border-top:10px solid var(--c);padding:22px 24px 24px}
+.dl h3{font-size:30px;font-weight:800;padding-right:44px}
+.dl dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:16px 0 0;font-size:15px}
+.dl dt{color:var(--soft)}
+.dl dd{margin:0}
+.dl .note{margin:16px 0 0;font-size:16px}
+.dl .itch{margin:12px 0 0;padding:10px 12px;background:var(--card);font-size:15px}
+.x{position:absolute;top:16px;right:16px;width:44px;height:44px;border:0;background:var(--card);color:var(--ink);font:700 22px/1 Archivo,sans-serif;cursor:pointer}
+footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
+@media(max-width:800px){.hall .wrap{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:960px){.plan{flex-direction:column;min-height:0}.room{border-right:0;border-bottom:6px solid var(--wall);min-height:84px;flex-direction:row;align-items:flex-end;gap:12px;flex-wrap:wrap}.room.res{min-width:0}.room:last-child{border-bottom:0}.room::after{right:auto;top:auto;bottom:-6px;left:40%;width:38px;height:6px}.room .nm{flex:1 1 auto}}
+@media(max-width:600px){.head{grid-template-columns:minmax(0,1fr)}.bar{grid-template-columns:minmax(6em,8em) minmax(0,1fr) 2.4em}}
+@media(prefers-reduced-motion:reduce){.room{transition:none}}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+  <div class="head">
+    <div>
+      <h1>Le musée de HappyKing</h1>
+      <p class="lede">Quarante-cinq ans de jeux, des consoles Pong et du 800 XL jusqu'à la Switch 2. Cinq salles, cinq chapitres de ma vie de joueur, avec les pièces qui ont compté et leurs histoires.</p>
+      <p class="lede alias">HappyKing est un jeu de mots sur mon nom, né en seconde, en essayant de faire mes premiers écrans de démo sur Atari ST. Je n'ai jamais dépassé la boule de points qui rebondit et le petit scroller, mais le nom est resté.</p>
+    </div>
+    <div class="totals" id="totals"></div>
+  </div>
+  <nav class="plan" id="plan" aria-label="Plan du musée"></nav>
+  <p class="hint">Plan du musée : plus une salle est grande, plus elle contient de jeux. Chaque jeu est rangé à l’année où je l’ai découvert : la sortie, sauf pour les jeux rattrapés plus tard (MAME, compilations, rééditions).</p>
+</div></header>
+
+<main id="room"></main>
+
+<footer class="band"><div class="wrap">Tiré de l'archive personnelle « Archives jeux vidéo ». Collection en cours d'enrichissement.</div></footer>
+
+<dialog id="dlg" aria-labelledby="dt"><div class="dl" id="dlb"></div><button class="x" id="dx" aria-label="Fermer">×</button></dialog>
+
+<script>
+{
+const ROOMS=[
+ {id:'enfance',yrs:'Avant 1989',h:345,no:'Salle 1',nm:'L’enfance et le collège',c:'#b3123f',kick:'Avant 1989 · le 800 XL',
+  txt:"Les consoles Pong offertes à Noël, les Game & Watch des copains, l'Atari 800 XL et ses cartouches : Robotron, Archon, Rescue on Fractalus. Les salles d'arcade de Clermont-Ferrand avec mon père, à 5 francs la partie. Le C64 de mon cousin Olivier, les CPC des copains, le MO6 de l'oncle."},
+ {id:'lycee',yrs:'1989 – 1994',h:228,no:'Salle 2',nm:'Lycée et prépa',c:'#1f3fbf',kick:'1989 – 1994 · le ST et le 486 SX',
+  txt:"L'Atari ST arrive en 1989 : les compils pirates, les jeux français, la 3D en polygones pleins, et mes premiers essais d'écrans de démo en assembleur : c'est là que naît l'alias HappyKing. Puis le PC 486 SX, les simulations de vol et les RPG en 3D. La Super Nintendo de mon cousin Olivier."},
+ {id:'nomades',yrs:'1995 – 2008',h:176,no:'Salle 3',nm:'Les années nomades',c:'#0a7672',kick:'1995 – 2008 · Grenoble, Amsterdam, Sophia',
+  txt:"Les études à Grenoble et la colloc avec Cyrille, puis coopérant à Amsterdam. Le premier boulot à Sophia Antipolis, et le retour à Amsterdam pour six ans. La Nintendo 64, puis la GameCube, la GBA et la DS dans la valise de mission, les Wii Nights, les débuts de la Xbox 360. MAME, dès 2003, pour retrouver les bornes."},
+ {id:'papa',yrs:'2009 – 2017',h:290,no:'Salle 4',nm:'Jeune papa',c:'#8a2b9c',kick:'2009 – 2017 · Augustin, puis Jules',
+  txt:"Augustin naît en 2009, Jules en 2012. La Xbox 360 en canapé, les LEGO en coop, Kinect, Minecraft, puis l'iPhone et ses jeux d'un bouton. Portal 2 devient un rite de passage. Les classiques rattrapés avec la Rare Replay et la Super Nintendo Mini."},
+ {id:'transmission',yrs:'Depuis 2018',h:40,no:'Salle 5',nm:'La transmission',c:'#9a6a06',kick:'2018 – aujourd’hui · avec Adèle',
+  txt:"Adèle arrive en 2018. La Switch et le Game Pass, la coop avec Jules, les parties en ligne de la période Covid, les jeux que les enfants m'offrent ou me font découvrir. Les matins F-Zero 99, et la Switch 2."},
+ {id:'res',yrs:'Sans date',h:240,gray:1,no:'Réserves',nm:'Énigmes',c:'#3a3a40',kick:'À identifier, sans date',
+  txt:"Les pièces qu'on n'a pas encore réussi à identifier, et celles dont la date reste floue. Une piste ? Elle est la bienvenue."}
+];
+const VALISE=['GameCube','Game Boy Advance','DS'];
+const META=/(Bibliothèque Xbox|historique Switch|Cité comme|vu en partie sur la capture|Game Pass|EA Play|sheet|à confirmer|à préciser|je crois)/i;
+const clean=n=>(n||'').replace(/^Recommandation\s*:\s*/,'').split(/(?<=[.!?])\s+/).filter(s=>s&&!META.test(s)).join(' ');
+const txt=g=>g.ca||clean(g.n);
+const isValise=g=>g.r==='nomades'&&VALISE.includes(g.m)&&parseInt(yr(g),10)>=2000;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let G=[];let MN={};let TG={};
+const slug=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const ptags=g=>g.pe.length?`<span class="ptags">${g.pe.map(p=>`<span class="ptag" role="link" tabindex="0" data-p="${esc(p)}">${esc(p)}</span>`).join('')}</span>`:'';
+const mnote=(m,r)=>MN[m+'@'+r]||MN[m]||'';
+const yr=g=>g.fy||g.y;
+const roomOf=g=>{if(!yr(g)||g.st==='À identifier')return 'res';const y=parseInt(yr(g),10);if(isNaN(y))return 'res';if(/^Atari ST/.test(g.m||''))return 'lycee';if(g.m==='PC'&&y<1991)return 'lycee';const yy=y;return yy<1989?'enfance':yy<1995?'lycee':yy<2009?'nomades':yy<2018?'papa':'transmission'};
+const state={room:'enfance',q:'',onlyMk:false,kids:false,person:'',tag:''};
+const PAL={};
+function buildPal(){
+  const OFF=[0,-16,16,-30,30,-44,44,-56,56,-66,66,-74,74];
+  const LIG=[42,30,52,36,58,26,47,63,33,55,40,60,28];
+  ROOMS.forEach(R=>{
+    const cnt={};G.filter(g=>g.r===R.id).forEach(g=>{const k=g.m||'Machine à préciser';cnt[k]=(cnt[k]||0)+1});
+    const ms=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
+    PAL[R.id]={list:ms,col:{}};
+    ms.forEach(([m],i)=>{const h=(R.h+OFF[i%OFF.length]+360)%360,s=R.gray?8+i*3:Math.max(45,82-i*3),l=LIG[i%LIG.length];PAL[R.id].col[m]=`hsl(${h} ${s}% ${l}%)`});
+  });
+}
+const mc=g=>(PAL[g.r]&&PAL[g.r].col[g.m||'Machine à préciser'])||'#777';
+
+function renderPlan(){
+  const counts={};G.forEach(g=>{counts[g.r]=(counts[g.r]||0)+1});
+  $('#plan').innerHTML=ROOMS.map(r=>`<button class="room${r.id==='res'?' res':''}" style="--c:${r.c};flex-grow:${r.id==='res'?0:Math.sqrt(counts[r.id]||1).toFixed(2)}" data-r="${r.id}" aria-current="${state.room===r.id}"><span class="no">${r.no}</span><span class="nm">${r.nm}</span><span class="yr">${r.yrs}</span><span class="ct">${counts[r.id]||0} jeux</span><span class="strip">${(PAL[r.id]?PAL[r.id].list:[]).map(([m,n])=>`<i style="flex-grow:${n};background:${PAL[r.id].col[m]}" title="${esc(m)}"></i>`).join('')}</span></button>`).join('');
+  const mk=G.filter(g=>g.mk).length,fin=G.filter(g=>/^Oui/.test(g.f)).length,mach=new Set(G.map(g=>g.m).filter(Boolean)).size;
+  $('#totals').innerHTML=[[G.length,'jeux'],[mach,'machines'],[mk,'marquants'],[fin,'finis']].map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join('');
+}
+
+function cartel(g,r){
+  const tags=[];if(g.st==='À explorer')tags.push('À explorer');if(isValise(g))tags.push('Console de valise');if(/^Oui/.test(g.f))tags.push('Fini');if(g.tr&&g.tr!=='Joué ensemble')tags.push(g.tr);if(g.w&&g.w!=='Perso')tags.push(g.w);
+  return `<button class="cartel" data-i="${g.i}" style="--mc:${mc(g)}"><h4>${esc(g.t)}</h4><div class="meta">${esc(g.y)}${g.fy&&g.fy!==g.y?' · découvert en '+esc(g.fy):''} · <span class="sw" style="background:${mc(g)}"></span>${esc(g.m)}${g.s?' · '+esc(g.s):''}</div>${txt(g)?`<p>${esc(txt(g))}</p>`:''}${tags.length?`<div class="tags">${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}${ptags(g)}</button>`;
+}
+
+function renderRoom(){
+  const R=ROOMS.find(r=>r.id===state.room)||ROOMS[0];
+  document.documentElement.style.setProperty('--c',R.c);
+  const all=G.filter(g=>g.r===R.id);
+  const byM={};all.forEach(g=>{const k=g.m||'Machine à préciser';(byM[k]=byM[k]||[]).push(g)});
+  const ms=Object.entries(byM).sort((a,b)=>b[1].length-a[1].length);
+  const max=ms.length?ms[0][1].length:1;
+  const mk=all.filter(g=>g.mk).sort((a,b)=>(yr(a)||'').localeCompare(yr(b)||''));
+  const fin=all.filter(g=>/^Oui/.test(g.f)).length;
+  const feat=R.id==='res'?all.filter(g=>g.st==='À identifier'):mk;
+  $('#room').innerHTML=`
+  <section class="band hall" style="--c:${R.c}"><div class="wrap">
+    <div><div class="kick">${R.no} · ${R.kick}</div><h2>${R.nm}</h2><p>${R.txt}</p>
+      <div class="mstats"><div><b>${all.length}</b>jeux</div><div><b>${ms.length}</b>machines</div><div><b>${mk.length}</b>marquants</div><div><b>${fin}</b>finis</div></div></div>
+    <div class="bars"><h3>Machines de la salle</h3>${ms.slice(0,10).map(([m,l])=>`<div class="bar"><span><span class="sw" style="background:${PAL[R.id].col[m]}"></span>${esc(m)}</span><i style="width:${Math.max(4,l.length/max*100)}%;background:${PAL[R.id].col[m]}"></i><em>${l.length}</em></div>`).join('')}${ms.length>10?`<div class="bar more"><span>+ ${ms.length-10} autres machines</span></div>`:''}</div>
+  </div></section>
+  <section class="band" style="--c:${R.c}"><div class="wrap">
+    <div class="sec"><h3>${R.id==='res'?'Pièces non identifiées':'Pièces maîtresses'}</h3><span>${feat.length} ${R.id==='res'?'énigmes':'jeux marquants'}</span></div>
+    <div class="cartels">${feat.length?feat.map(g=>cartel(g,R)).join(''):'<p class="empty">Aucune pièce marquante dans cette salle pour l’instant.</p>'}</div>
+  </div></section>
+  <section class="band" id="coll" style="--c:${R.c};padding-top:0"><div class="wrap">
+    <div class="sec"><h3>Toute la collection</h3><span id="cnt"></span></div>
+    <div class="tools">
+      <input id="q" type="search" placeholder="Chercher un jeu, un studio, un souvenir…" aria-label="Chercher dans la salle" value="${esc(state.q)}">
+      <label><input id="omk" type="checkbox" ${state.onlyMk?'checked':''}>Marquants seulement</label>
+      <select id="opp" aria-label="Avec qui"><option value="">Avec tout le monde</option>${(()=>{const pc={};all.forEach(g=>g.pe.forEach(p=>pc[p]=(pc[p]||0)+1));return Object.entries(pc).sort((a,b)=>b[1]-a[1]).map(([p,n])=>`<option value="${esc(p)}"${state.person===p?' selected':''}>Avec ${esc(p)} (${n})</option>`).join('')})()}</select>
+      <select id="otg" aria-label="Parcours"><option value="">Tous les parcours</option>${(()=>{const tc={};G.forEach(g=>g.tg.forEach(t=>tc[t]=(tc[t]||0)+1));const fam={};Object.keys(tc).forEach(t=>{const f=(TG[t]&&TG[t].f)||'Autres';(fam[f]=fam[f]||[]).push(t)});return ['Lieu / moment','Thème','Studio / créateur','Série','Autres'].filter(f=>fam[f]).map(f=>`<optgroup label="${esc(f)}">${fam[f].sort((a,b)=>a.localeCompare(b,'fr')).map(t=>`<option value="${esc(t)}"${state.tag===t?' selected':''}>${esc(t.replace(/^Série /,''))} (${tc[t]})</option>`).join('')}</optgroup>`).join('')})()}</select>
+    </div>
+    <div id="ptour"></div>
+    <div class="machines" id="mlist"></div>
+  </div></section>`;
+  renderList();
+  document.querySelectorAll('.room').forEach(b=>b.setAttribute('aria-current',b.dataset.r===R.id));
+}
+
+const KIDS=['Les enfants','Augustin','Jules','Adèle'];
+const withP=g=>!state.person||(state.person==='Les enfants'?g.pe.some(p=>KIDS.includes(p)):g.pe.includes(state.person));
+const renderFiltered=()=>renderList();
+const withT=g=>!state.tag||g.tg.includes(state.tag);
+function renderTour(){const el=$('#ptour');if(!el)return;if(!state.tag){el.innerHTML='';return}const t=state.tag,d=(TG[t]&&TG[t].d)||'';const cnt={};G.filter(g=>g.tg.includes(t)).forEach(g=>cnt[g.r]=(cnt[g.r]||0)+1);el.innerHTML=`<div class="ptour"><b>Parcours · ${esc(t)}</b>${d?`<p>${esc(d)}</p>`:''}<div class="rooms">${ROOMS.filter(r=>cnt[r.id]).map(r=>`<a href="#salle-${r.id}" data-tour="${r.id}" aria-current="${state.room===r.id}">${esc(r.no)} · ${esc(r.nm)} (${cnt[r.id]})</a>`).join('')}</div></div>`}
+function renderList(){
+  const q=state.q.trim().toLowerCase();
+  renderTour();
+  const list=G.filter(g=>g.r===state.room&&(!state.onlyMk||g.mk)&&withP(g)&&withT(g)&&(!q||[g.t,g.s,txt(g),g.m,g.ge,g.w,g.tg.join(' ')].join(' ').toLowerCase().includes(q)));
+  const byM={};list.forEach(g=>{const k=g.m||'Machine à préciser';(byM[k]=byM[k]||[]).push(g)});
+  const ms=Object.entries(byM).sort((a,b)=>b[1].length-a[1].length);
+  $('#cnt').textContent=list.length+' jeu'+(list.length>1?'x':'');
+  $('#mlist').innerHTML=ms.length?ms.map(([m,l])=>`<div class="mach" style="--mc:${PAL[state.room].col[m]||'#777'}"><h4><span class="mn"><span class="sw"></span>${esc(m)}${state.room==='nomades'&&VALISE.includes(m)?' <em class="val">console de valise</em>':''}</span><span>${l.length}</span></h4>${mnote(m,state.room)?`<p class="mnote">${esc(mnote(m,state.room))}</p>`:''}<ul>${l.sort((a,b)=>(a.y||'9').localeCompare(b.y||'9')||a.t.localeCompare(b.t)).map(g=>`<li><button data-i="${g.i}"><span class="y" title="${g.fy&&g.fy!==g.y?'Sorti en '+esc(g.y)+', découvert en '+esc(g.fy):''}">${esc(g.y||'–')}${g.fy&&g.fy!==g.y?'<small>→'+esc(g.fy.slice(2))+'</small>':''}</span><span class="t">${g.mk?'<b>'+esc(g.t)+'</b>':esc(g.t)}${g.st==='À explorer'?' <em class="val">à explorer</em>':''}</span>${g.mk?'<span class="mk" aria-label="marquant">★</span>':'<span></span>'}</button></li>`).join('')}</ul></div>`).join(''):'<p class="empty">Rien ne correspond à cette recherche dans cette salle.</p>';
+}
+
+function openGame(i){
+  const g=G[i];if(!g)return;
+  const R=ROOMS.find(r=>r.id===g.r);
+  const rows=[['Année de sortie',g.y],['Première fois',g.fy&&g.fy!==g.y?g.fy:''],['Machine',g.m],['Chez qui',g.w],['Studio',g.s?(g.s+(g.p?' ('+g.p+')':'')):''],['Genre',g.ge],['Statut',g.st],['Fini',g.f]].filter(r=>r[1]);
+  $('#dlb').style.setProperty('--c',mc(g));
+  $('#dlb').innerHTML=`<h3 id="dt">${esc(g.t)}</h3><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}${g.mk?'<dt>Marquant</dt><dd>★ Oui</dd>':''}${g.tr?`<dt>Transmission</dt><dd>${esc(g.tr)}</dd>`:''}${isValise(g)?'<dt>Voyage</dt><dd>Console de valise, en mission</dd>':''}${g.pe.length?`<dt>Avec</dt><dd>${ptags(g)}</dd>`:''}${g.tg.length?`<dt>Parcours</dt><dd>${g.tg.map(t=>`<span class="ttag" role="link" tabindex="0" data-t="${esc(t)}">${esc(t)}</span>`).join('')}</dd>`:''}</dl>${txt(g)?`<p class="note">${esc(txt(g))}</p>`:''}${g.it?`<p class="itch">${esc(g.it)}</p>`:''}`;
+  const d=$('#dlg');if(d.showModal)d.showModal();else d.setAttribute('open','');
+}
+
+let keepTag=false;
+function go(id,scroll){
+  if(!ROOMS.some(r=>r.id===id))id='enfance';
+  state.room=id;state.q='';state.person='';if(!keepTag)state.tag='';renderRoom();
+  if(scroll)$('#room').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+
+document.addEventListener('click',e=>{
+  const r=e.target.closest('.room');if(r){const h='salle-'+r.dataset.r;if(location.hash==='#'+h)go(r.dataset.r,true);else location.hash=h;return}
+  const pp=e.target.closest('[data-p]');if(pp){e.preventDefault();e.stopPropagation();const d=$('#dlg');if(d.open)d.close();state.person=pp.dataset.p;const sel=$('#opp');if(sel)sel.value=state.person;renderFiltered();const t=$('#coll');if(t)t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});return}
+  const tt=e.target.closest('[data-t]');if(tt){e.preventDefault();e.stopPropagation();const d=$('#dlg');if(d.open)d.close();state.tag=tt.dataset.t;const sel=$('#otg');if(sel)sel.value=state.tag;renderList();const t=$('#coll');if(t)t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});return}
+  const tr=e.target.closest('[data-tour]');if(tr){e.preventDefault();keepTag=true;if(location.hash==='#salle-'+tr.dataset.tour)go(tr.dataset.tour,false);else location.hash='salle-'+tr.dataset.tour;return}
+  const c=e.target.closest('[data-i]');if(c){openGame(+c.dataset.i);return}
+});
+document.addEventListener('change',e=>{if(e.target.id==='opp'){state.person=e.target.value;renderList()}if(e.target.id==='otg'){state.tag=e.target.value;renderList()}});
+document.addEventListener('input',e=>{
+  if(e.target.id==='q'){state.q=e.target.value;renderList()}
+  if(e.target.id==='omk'){state.onlyMk=e.target.checked;renderList()}
+  if(e.target.id==='opp'){state.person=e.target.value;renderList()}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.classList&&(e.target.classList.contains('ptag')||e.target.classList.contains('ttag')))e.target.click()});
+$('#dx').addEventListener('click',()=>$('#dlg').close());
+$('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')$('#dlg').close()});
+function route(scroll){const m=location.hash.match(/^#salle-(\w+)$/);go(m?m[1]:'enfance',scroll&&!keepTag);if(keepTag){keepTag=false;const t=$('#coll');if(t)t.scrollIntoView({behavior:'auto'})}}
+window.addEventListener('hashchange',()=>route(true));
+
+Promise.all([fetch('data.json?v='+Date.now()).then(r=>r.json()),fetch('machines.json?v='+Date.now()).then(r=>r.json()).catch(()=>({})),fetch('tags.json?v='+Date.now()).then(r=>r.json()).catch(()=>({}))]).then(([d,mn,tg])=>{MN=mn||{};TG=tg||{};
+  G=d.map((a,i)=>({i,t:a[0],y:a[1],m:a[2],w:a[3],s:a[4],p:a[5],ge:a[6],st:a[7],f:a[8],mk:a[9],k:a[10]?(a[10]==='Oui'?'Les enfants':a[10]):'',n:a[11],it:a[12],fy:a[13]||'',tr:a[14]||'',ca:a[15]||'',pe:(a[16]||'').split(/\s*,\s*/).filter(Boolean),tg:(a[17]||'').split(/\s*,\s*/).filter(Boolean)})).filter(g=>g.t);
+  G.forEach((g,i)=>{g.i=i;g.r=roomOf(g)});buildPal();
+  renderPlan();route(false);
+}).catch(()=>{$('#room').innerHTML='<section class="band"><div class="wrap"><p class="empty">La collection n’a pas pu être chargée. Recharge la page.</p></div></section>'});
+}
+</script>
+</body>
+</html>
