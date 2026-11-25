@@ -1,6 +1,6 @@
 # Mémoire vive
 
-Le musée de HappyKing : quarante ans de jeux vidéo, de l'Atari 800 XL à la Switch, racontés salle par salle.
+Le musée de HappyKing : quarante-cinq ans de jeux vidéo, des consoles Pong et de l'Atari 800 XL jusqu'à la Switch 2, racontés salle par salle.
 
 **Visiter : https://happyking.github.io/memoire-vive**
 
