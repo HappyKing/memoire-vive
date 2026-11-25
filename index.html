@@ -25,12 +25,6 @@ h1,h2,h3,.sign{font-family:Archivo,"Arial Narrow",sans-serif;font-stretch:80%;le
 h1{font-size:clamp(34px,5.4vw,52px);font-weight:800;text-wrap:balance}
 .lede{font-size:17px;max-width:62ch;color:var(--soft);margin:12px 0 0}
 .lede.alias{font-size:15px;font-style:italic}
-.ptour{margin:0 0 18px;padding:14px 16px;border-left:6px solid var(--c);background:var(--card)}
-.ptour b{font-family:Archivo,sans-serif;font-stretch:82%;font-size:18px}
-.ptour p{margin:4px 0 0;font-size:15px}
-.ptour .rooms{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.ptour .rooms a{font:600 13px/1 Archivo,sans-serif;font-stretch:85%;padding:6px 10px;border-radius:99px;border:1px solid var(--line);color:inherit;text-decoration:none}
-.ptour .rooms a[aria-current=true]{background:var(--ink);color:var(--bg)}
 .ttag{font:600 13px/1 Archivo,sans-serif;font-stretch:85%;padding:6px 10px;border-radius:99px;border:1.5px solid var(--ink);cursor:pointer;white-space:nowrap;display:inline-block;margin:0 6px 6px 0}
 .head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
 .totals{display:flex;gap:28px;flex-wrap:wrap;font-family:Archivo,sans-serif;font-stretch:80%}
@@ -66,6 +60,43 @@ h1{font-size:clamp(34px,5.4vw,52px);font-weight:800;text-wrap:balance}
 .pwing h3{font-size:24px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .pwing h3>span:last-child{font:500 15px 'Source Serif 4',serif;color:var(--soft);margin-left:8px}
 .hint{font-size:14px;color:var(--soft);margin:10px 0 0}
+.tlink{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;font:700 17px/1.2 Archivo,sans-serif;font-stretch:82%;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+.tlink:hover{opacity:.75}
+.back{display:inline-flex;min-height:44px;align-items:center;font:600 15px/1 Archivo,sans-serif;font-stretch:85%;color:inherit;opacity:.8;text-decoration:none;margin-bottom:6px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:34px}
+.ttile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;background:var(--card);padding:16px 18px;min-height:150px}
+.ttile:hover{background:color-mix(in srgb,var(--ink) 7%,var(--card))}
+.ttile:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.ttile h4{font:700 20px/1.1 Archivo,sans-serif;font-stretch:82%;margin:0}
+.ttile .n{font-size:14px;color:var(--soft)}
+.ttile p{margin:0;font-size:14.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ttile .trooms{margin-top:auto;height:8px;max-width:none}
+.slist{columns:3 200px;column-gap:24px;margin:0;padding:0;list-style:none}
+.slist li button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:8px;width:100%;padding:5px 0;font-size:15px;border-bottom:1px solid var(--line)}
+.slist li button:hover{text-decoration:underline}
+.slist li button span{color:var(--soft);font-variant-numeric:tabular-nums}
+.tfam-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+.tfam-h h3{font-size:24px;font-weight:700}
+.tfam-h span{color:var(--soft);font-size:15px}
+.tfam{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.tfam .plabel{flex-basis:100%;font:600 13px/1 Archivo,sans-serif;font-stretch:85%;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin:8px 0 0}
+.tchip{font:600 14px/1 Archivo,sans-serif;font-stretch:85%;padding:9px 12px;min-height:38px;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);border-radius:99px;cursor:pointer}
+.tchip span{font-weight:500;color:var(--soft);margin-left:4px}
+.tchip:hover,.tchip[aria-current=true]{background:var(--ink);color:var(--bg)}
+.tchip:hover span,.tchip[aria-current=true] span{color:var(--bg);opacity:.75}
+.tmore{font:600 14px/1 Archivo,sans-serif;font-stretch:85%;padding:9px 12px;min-height:38px;border:1.5px dashed var(--soft);background:none;color:var(--soft);border-radius:99px;cursor:pointer}
+.twing{margin-bottom:30px;border-left:8px solid var(--rc);padding-left:16px}
+.twing h3{font-size:22px;font-weight:700;margin-bottom:10px}
+.twing h3 small{font:500 15px 'Source Serif 4',serif;color:var(--soft);margin-left:8px}
+.twing ul{list-style:none;margin:0;padding:0;columns:2 300px;column-gap:28px}
+.twing li{break-inside:avoid}
+.twing li button{all:unset;cursor:pointer;display:grid;grid-template-columns:4.6em minmax(0,1fr) auto;gap:8px;padding:4px 0;width:100%;font-size:15px;line-height:1.35}
+.twing li button:hover .t{text-decoration:underline}
+.twing li button:focus-visible{outline:2px solid var(--rc)}
+.twing .y{color:var(--soft);font-variant-numeric:tabular-nums}
+.twing .m{color:var(--soft);font-size:13px;white-space:nowrap}
+.trooms{display:flex;height:12px;gap:3px;margin-top:18px;max-width:520px}
+.trooms i{display:block;min-width:4px}
 .hall{background:var(--c);color:#fff}
 .hall .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
 .hall h2{font-size:clamp(32px,4.6vw,48px);font-weight:800}
@@ -147,6 +178,7 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
     <div class="totals" id="totals"></div>
   </div>
   <nav class="plan" id="plan" aria-label="Plan du musée"></nav>
+  <a class="tlink" href="#parcours">Parcours thématiques : suivre un fil à travers les salles →</a>
   <p class="hint">Plan du musée : plus une salle est grande, plus elle contient de jeux. Chaque jeu est rangé à l’année où je l’ai découvert : la sortie, sauf pour les jeux rattrapés plus tard (MAME, compilations, rééditions).</p>
 </div></header>
 
@@ -185,7 +217,7 @@ const ptags=g=>g.pe.length?`<span class="ptags">${g.pe.map(p=>`<span class="ptag
 const mnote=(m,r)=>MN[m+'@'+r]||MN[m]||'';
 const yr=g=>g.fy||g.y;
 const roomOf=g=>{if(!yr(g)||g.st==='À identifier')return 'res';const y=parseInt(yr(g),10);if(isNaN(y))return 'res';if(/^Atari ST/.test(g.m||''))return 'lycee';if(g.m==='PC'&&y<1991)return 'lycee';const yy=y;return yy<1989?'enfance':yy<1995?'lycee':yy<2009?'nomades':yy<2018?'papa':'transmission'};
-const state={room:'enfance',q:'',onlyMk:false,kids:false,person:'',tag:''};
+const state={room:'enfance',q:'',onlyMk:false,kids:false,person:'',tour:''};
 const PAL={};
 function buildPal(){
   const OFF=[0,-16,16,-30,30,-44,44,-56,56,-66,66,-74,74];
@@ -237,9 +269,7 @@ function renderRoom(){
       <input id="q" type="search" placeholder="Chercher un jeu, un studio, un souvenir…" aria-label="Chercher dans la salle" value="${esc(state.q)}">
       <label><input id="omk" type="checkbox" ${state.onlyMk?'checked':''}>Marquants seulement</label>
       <select id="opp" aria-label="Avec qui"><option value="">Avec tout le monde</option>${(()=>{const pc={};all.forEach(g=>g.pe.forEach(p=>pc[p]=(pc[p]||0)+1));return Object.entries(pc).sort((a,b)=>b[1]-a[1]).map(([p,n])=>`<option value="${esc(p)}"${state.person===p?' selected':''}>Avec ${esc(p)} (${n})</option>`).join('')})()}</select>
-      <select id="otg" aria-label="Parcours"><option value="">Tous les parcours</option>${(()=>{const tc={};G.forEach(g=>g.tg.forEach(t=>tc[t]=(tc[t]||0)+1));const fam={};Object.keys(tc).forEach(t=>{const f=(TG[t]&&TG[t].f)||'Autres';(fam[f]=fam[f]||[]).push(t)});return ['Lieu / moment','Thème','Studio / créateur','Série','Autres'].filter(f=>fam[f]).map(f=>`<optgroup label="${esc(f)}">${fam[f].sort((a,b)=>a.localeCompare(b,'fr')).map(t=>`<option value="${esc(t)}"${state.tag===t?' selected':''}>${esc(t.replace(/^Série /,''))} (${tc[t]})</option>`).join('')}</optgroup>`).join('')})()}</select>
     </div>
-    <div id="ptour"></div>
     <div class="machines" id="mlist"></div>
   </div></section>`;
   renderList();
@@ -249,12 +279,56 @@ function renderRoom(){
 const KIDS=['Les enfants','Augustin','Jules','Adèle'];
 const withP=g=>!state.person||(state.person==='Les enfants'?g.pe.some(p=>KIDS.includes(p)):g.pe.includes(state.person));
 const renderFiltered=()=>renderList();
-const withT=g=>!state.tag||g.tg.includes(state.tag);
-function renderTour(){const el=$('#ptour');if(!el)return;if(!state.tag){el.innerHTML='';return}const t=state.tag,d=(TG[t]&&TG[t].d)||'';const cnt={};G.filter(g=>g.tg.includes(t)).forEach(g=>cnt[g.r]=(cnt[g.r]||0)+1);el.innerHTML=`<div class="ptour"><b>Parcours · ${esc(t)}</b>${d?`<p>${esc(d)}</p>`:''}<div class="rooms">${ROOMS.filter(r=>cnt[r.id]).map(r=>`<a href="#salle-${r.id}" data-tour="${r.id}" aria-current="${state.room===r.id}">${esc(r.no)} · ${esc(r.nm)} (${cnt[r.id]})</a>`).join('')}</div></div>`}
+const FAMS=['Lieu / moment','Thème','Studio / créateur','Série'];
+const FLAB={'Lieu / moment':'Lieux et moments','Thème':'Thèmes','Studio / créateur':'Studios','Série':'Séries'};
+const FDESC={'Lieu / moment':'Les endroits et les époques où l’on a joué.','Thème':'Les fils qui traversent toute la collection.','Studio / créateur':'Les studios et créateurs qui reviennent d’une salle à l’autre.','Série':'Les séries suivies sur plusieurs épisodes.'};
+const tcount=()=>{const tc={};G.forEach(g=>g.tg.forEach(t=>tc[t]=(tc[t]||0)+1));return tc};
+const tname=t=>t.replace(/^Série /,'');
+const tstrip=t=>{const by={};G.filter(g=>g.tg.includes(t)).forEach(g=>by[g.r]=(by[g.r]||0)+1);return `<span class="trooms" aria-hidden="true">${ROOMS.filter(r=>by[r.id]).map(r=>`<i style="flex-grow:${by[r.id]};background:${r.c}"></i>`).join('')}</span>`};
+function renderTours(){}
+function renderToursIndex(){
+  const tc=tcount();const fam={};Object.keys(tc).forEach(t=>{const f=(TG[t]&&TG[t].f)||'Thème';(fam[f]=fam[f]||[]).push(t)});
+  document.documentElement.style.setProperty('--c','#141416');
+  const total=Object.keys(tc).length;
+  $('#room').innerHTML=`
+  <section class="band phall"><div class="wrap">
+    <a class="back" href="#salle-enfance">← Retour aux salles</a>
+    <div class="kick">À travers toutes les salles</div><h2>Parcours thématiques</h2>
+    <p>Les salles racontent ma vie de joueur dans l’ordre. Les parcours la traversent autrement : par lieu, par thème, par studio ou par série. La frise de chaque parcours montre les salles qu’il traverse.</p>
+    <div class="mstats"><div><b>${total}</b>parcours</div></div>
+  </div></section>
+  <section class="band"><div class="wrap">
+  ${FAMS.filter(f=>fam[f]).map(f=>{
+    const ts=fam[f].sort((a,b)=>f==='Série'?tname(a).localeCompare(tname(b),'fr'):(tc[b]-tc[a])||a.localeCompare(b,'fr'));
+    const head=`<div class="tfam-h"><h3>${FLAB[f]}</h3><span>${FDESC[f]}</span></div>`;
+    if(f==='Série') return head+`<ul class="slist" style="margin-bottom:34px">${ts.map(t=>`<li><button data-tour="${esc(t)}">${esc(tname(t))}<span>${tc[t]}</span></button></li>`).join('')}</ul>`;
+    return head+`<div class="tgrid">${ts.map(t=>`<button class="ttile" data-tour="${esc(t)}"><h4>${esc(t)}</h4><span class="n">${tc[t]} jeu${tc[t]>1?'x':''}</span>${TG[t]&&TG[t].d?`<p>${esc(TG[t].d)}</p>`:''}${tstrip(t)}</button>`).join('')}</div>`}).join('')}
+  </div></section>`;
+  document.querySelectorAll('.room').forEach(b=>b.setAttribute('aria-current','false'));
+}
+function renderTourHall(t){
+  const list=G.filter(g=>g.tg.includes(t)).sort((a,b)=>(yr(a)||'9999').localeCompare(yr(b)||'9999')||a.t.localeCompare(b.t));
+  const d=(TG[t]&&TG[t].d)||'',f=(TG[t]&&TG[t].f)||'Thème';
+  const mk=list.filter(g=>g.mk);
+  const byR={};list.forEach(g=>(byR[g.r]=byR[g.r]||[]).push(g));
+  document.documentElement.style.setProperty('--c','#141416');
+  $('#room').innerHTML=`
+  <section class="band phall"><div class="wrap">
+    <a class="back" href="#parcours">← Tous les parcours</a>
+    <div class="kick">Parcours · ${esc(FLAB[f]||f)}</div><h2>${esc(tname(t))}</h2>${d?`<p>${esc(d)}</p>`:''}
+    <div class="mstats"><div><b>${list.length}</b>jeux</div><div><b>${Object.keys(byR).length}</b>salles traversées</div><div><b>${mk.length}</b>marquants</div></div>
+    <div class="trooms" aria-hidden="true">${ROOMS.filter(r=>byR[r.id]).map(r=>`<i style="flex-grow:${byR[r.id].length};background:${r.c}"></i>`).join('')}</div>
+  </div></section>
+  ${mk.length?`<section class="band"><div class="wrap"><div class="sec"><h3>Pièces maîtresses du parcours</h3><span>${mk.length} jeux marquants</span></div><div class="cartels">${mk.map(g=>cartel(g)).join('')}</div></div></section>`:''}
+  <section class="band" style="padding-top:${mk.length?0:'clamp(28px,4vw,56px)'}"><div class="wrap">
+    <div class="sec"><h3>Le parcours, salle par salle</h3><span>${list.length} jeu${list.length>1?'x':''}</span></div>
+    ${ROOMS.filter(r=>byR[r.id]).map(r=>`<div class="twing" style="--rc:${r.c}"><h3>${esc(r.no)} · ${esc(r.nm)}<small>${esc(r.yrs)} · ${byR[r.id].length}</small></h3><ul>${byR[r.id].map(g=>`<li><button data-i="${g.i}"><span class="y">${esc(yr(g)||'–')}</span><span class="t">${g.mk?'<b>'+esc(g.t)+'</b>':esc(g.t)} <span class="m"><span class="sw" style="background:${mc(g)}"></span>${esc(g.m||'')}</span></span>${g.mk?'<span class="mk" style="--mc:'+r.c+'">★</span>':'<span></span>'}</button></li>`).join('')}</ul></div>`).join('')}
+  </div></section>`;
+  document.querySelectorAll('.room').forEach(b=>b.setAttribute('aria-current','false'));
+}
 function renderList(){
   const q=state.q.trim().toLowerCase();
-  renderTour();
-  const list=G.filter(g=>g.r===state.room&&(!state.onlyMk||g.mk)&&withP(g)&&withT(g)&&(!q||[g.t,g.s,txt(g),g.m,g.ge,g.w,g.tg.join(' ')].join(' ').toLowerCase().includes(q)));
+  const list=G.filter(g=>g.r===state.room&&(!state.onlyMk||g.mk)&&withP(g)&&(!q||[g.t,g.s,txt(g),g.m,g.ge,g.w,g.tg.join(' ')].join(' ').toLowerCase().includes(q)));
   const byM={};list.forEach(g=>{const k=g.m||'Machine à préciser';(byM[k]=byM[k]||[]).push(g)});
   const ms=Object.entries(byM).sort((a,b)=>b[1].length-a[1].length);
   $('#cnt').textContent=list.length+' jeu'+(list.length>1?'x':'');
@@ -270,21 +344,19 @@ function openGame(i){
   const d=$('#dlg');if(d.showModal)d.showModal();else d.setAttribute('open','');
 }
 
-let keepTag=false;
 function go(id,scroll){
   if(!ROOMS.some(r=>r.id===id))id='enfance';
-  state.room=id;state.q='';state.person='';if(!keepTag)state.tag='';renderRoom();
+  state.room=id;state.q='';state.person='';state.tour='';renderTours();renderRoom();
   if(scroll)$('#room').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
 
 document.addEventListener('click',e=>{
   const r=e.target.closest('.room');if(r){const h='salle-'+r.dataset.r;if(location.hash==='#'+h)go(r.dataset.r,true);else location.hash=h;return}
   const pp=e.target.closest('[data-p]');if(pp){e.preventDefault();e.stopPropagation();const d=$('#dlg');if(d.open)d.close();state.person=pp.dataset.p;const sel=$('#opp');if(sel)sel.value=state.person;renderFiltered();const t=$('#coll');if(t)t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});return}
-  const tt=e.target.closest('[data-t]');if(tt){e.preventDefault();e.stopPropagation();const d=$('#dlg');if(d.open)d.close();state.tag=tt.dataset.t;const sel=$('#otg');if(sel)sel.value=state.tag;renderList();const t=$('#coll');if(t)t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});return}
-  const tr=e.target.closest('[data-tour]');if(tr){e.preventDefault();keepTag=true;if(location.hash==='#salle-'+tr.dataset.tour)go(tr.dataset.tour,false);else location.hash='salle-'+tr.dataset.tour;return}
+  const tt=e.target.closest('[data-t],[data-tour]');if(tt){e.preventDefault();e.stopPropagation();const d=$('#dlg');if(d.open)d.close();const t=tt.dataset.t||tt.dataset.tour;location.hash='parcours-'+slug(t);return}
   const c=e.target.closest('[data-i]');if(c){openGame(+c.dataset.i);return}
 });
-document.addEventListener('change',e=>{if(e.target.id==='opp'){state.person=e.target.value;renderList()}if(e.target.id==='otg'){state.tag=e.target.value;renderList()}});
+document.addEventListener('change',e=>{if(e.target.id==='opp'){state.person=e.target.value;renderList()}});
 document.addEventListener('input',e=>{
   if(e.target.id==='q'){state.q=e.target.value;renderList()}
   if(e.target.id==='omk'){state.onlyMk=e.target.checked;renderList()}
@@ -293,13 +365,17 @@ document.addEventListener('input',e=>{
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.classList&&(e.target.classList.contains('ptag')||e.target.classList.contains('ttag')))e.target.click()});
 $('#dx').addEventListener('click',()=>$('#dlg').close());
 $('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')$('#dlg').close()});
-function route(scroll){const m=location.hash.match(/^#salle-(\w+)$/);go(m?m[1]:'enfance',scroll&&!keepTag);if(keepTag){keepTag=false;const t=$('#coll');if(t)t.scrollIntoView({behavior:'auto'})}}
+function route(scroll){
+  if(location.hash==='#parcours'){state.tour='';renderToursIndex();if(scroll)$('#room').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});return}
+  const p=location.hash.match(/^#parcours-([\w-]+)$/);
+  if(p){const t=Object.keys(tcount()).find(x=>slug(x)===p[1]);if(t){state.tour=t;renderTours();renderTourHall(t);if(scroll)$('#room').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});return}}
+  const m=location.hash.match(/^#salle-(\w+)$/);go(m?m[1]:'enfance',scroll)}
 window.addEventListener('hashchange',()=>route(true));
 
 Promise.all([fetch('data.json?v='+Date.now()).then(r=>r.json()),fetch('machines.json?v='+Date.now()).then(r=>r.json()).catch(()=>({})),fetch('tags.json?v='+Date.now()).then(r=>r.json()).catch(()=>({}))]).then(([d,mn,tg])=>{MN=mn||{};TG=tg||{};
   G=d.map((a,i)=>({i,t:a[0],y:a[1],m:a[2],w:a[3],s:a[4],p:a[5],ge:a[6],st:a[7],f:a[8],mk:a[9],k:a[10]?(a[10]==='Oui'?'Les enfants':a[10]):'',n:a[11],it:a[12],fy:a[13]||'',tr:a[14]||'',ca:a[15]||'',pe:(a[16]||'').split(/\s*,\s*/).filter(Boolean),tg:(a[17]||'').split(/\s*,\s*/).filter(Boolean)})).filter(g=>g.t);
   G.forEach((g,i)=>{g.i=i;g.r=roomOf(g)});buildPal();
-  renderPlan();route(false);
+  renderPlan();renderTours();route(false);
 }).catch(()=>{$('#room').innerHTML='<section class="band"><div class="wrap"><p class="empty">La collection n’a pas pu être chargée. Recharge la page.</p></div></section>'});
 }
 </script>
